@@ -8,7 +8,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.ZonedDateTime;
+import java.time.Instant;
 
 @Document(collection = "tracking_numbers")
 @Data
@@ -23,6 +23,6 @@ public class TrackingNumber {
     @Indexed(unique = true)
     private String trackingNumber;
 
-    private ZonedDateTime createdAt;
+    private Instant createdAt;
 }
 

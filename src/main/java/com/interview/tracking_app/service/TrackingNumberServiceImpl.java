@@ -36,7 +36,7 @@ public class TrackingNumberServiceImpl implements TrackingNumberService
             TrackingNumber record = new TrackingNumber();
             record.setId(UUID.randomUUID().toString());
             record.setTrackingNumber(trackingNumber);
-            record.setCreatedAt(ZonedDateTime.now());
+            record.setCreatedAt(ZonedDateTime.now().toInstant());
             try {
                 TrackingNumber saved = repository.save(record);
                 return CompletableFuture.completedFuture(saved);

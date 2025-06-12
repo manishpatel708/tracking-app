@@ -1,5 +1,6 @@
 package com.interview.tracking_app.model;
 
+import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,32 +17,41 @@ import java.util.UUID;
 @AllArgsConstructor
 public class NextTrackingNumberRequest {
 
+    @Parameter(
+            description = "Origin country code (ISO 3166-1 alpha-2)",
+            example = "US",
+            required = true
+    )
     @NotBlank
-    @Pattern(regexp = "^[A-Z]{2}$", message = "Origin country code must be ISO 3166-1 alpha-2")
-    private String originCountryId;
+    @Pattern(regexp = "^[A-Z]{2}$")
+    String originCountryId;
 
+    @Parameter(description = "Destination country code", example = "CA")
     @NotBlank
-    @Pattern(regexp = "^[A-Z]{2}$", message = "Destination country code must be ISO 3166-1 alpha-2")
-    private String destinationCountryId;
+    @Pattern(regexp = "^[A-Z]{2}$")
+    String destinationCountryId;
 
+    @Parameter(description = "Weight in kilograms (up to 3 decimal places)", example = "2.345")
     @NotNull
-    @DecimalMin(value = "0.001", inclusive = true)
+    @DecimalMin("0.001")
     @Digits(integer = 10, fraction = 3)
-    private Double weight;
+    Double weight;
 
+    @Parameter(description = "Creation timestamp (RFC 3339)", example = "2025-06-12T10:30:00+05:30")
     @NotNull
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private ZonedDateTime createdAt;
+    ZonedDateTime createdAt;
 
+    @Parameter(description = "Customer UUID", example = "de619854-b59b-425e-9db4-943979e1bd49")
+    @NotNull
+    UUID customerId;
+
+    @Parameter(description = "Customer name", example = "Fast Logistics")
     @NotBlank
-    @Pattern(regexp = "^[0-9a-fA-F\\-]{36}$", message = "Invalid UUID format")
-    private UUID customerId;
+    String customerName;
 
+    @Parameter(description = "Customer slug (kebab-case)", example = "fast-logistics")
     @NotBlank
-    private String customerName;
-
-    @NotBlank
-    @Pattern(regexp = "^[a-z0-9]+(?:-[a-z0-9]+)*$", message = "Customer slug must be in kebab-case")
-    private String customerSlug;
-
+    @Pattern(regexp = "^[a-z0-9]+(?:-[a-z0-9]+)*$")
+    String customerSlug;
 }
